@@ -1,0 +1,231 @@
+<!-- Estadísticas generales -->
+<div class="estadisticas-generales">
+  <mat-card class="estadistica-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>dashboard</mat-icon>
+        Resumen General
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="metricas-grid">
+        <div class="metrica-item">
+          <mat-icon>person</mat-icon>
+          <div class="metrica-info">
+            <div class="metrica-valor">{{ estadisticasCalculadas().totalJugadores }}</div>
+            <div class="metrica-label">Total Jugadores</div>
+          </div>
+        </div>
+        
+        <div class="metrica-item">
+          <mat-icon>groups</mat-icon>
+          <div class="metrica-info">
+            <div class="metrica-valor">{{ estadisticasCalculadas().totalEquipos }}</div>
+            <div class="metrica-label">Total Equipos</div>
+          </div>
+        </div>
+        
+        <div class="metrica-item">
+          <mat-icon>sports</mat-icon>
+          <div class="metrica-info">
+            <div class="metrica-valor">{{ estadisticasCalculadas().totalPartidos }}</div>
+            <div class="metrica-label">Total Partidos</div>
+          </div>
+        </div>
+        
+        <div class="metrica-item">
+          <mat-icon>check_circle</mat-icon>
+          <div class="metrica-info">
+            <div class="metrica-valor">{{ estadisticasCalculadas().jugadoresActivos }}</div>
+            <div class="metrica-label">Jugadores Activos</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Métricas de rendimiento -->
+<div class="metricas-rendimiento">
+  <mat-card class="rendimiento-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>trending_up</mat-icon>
+        Métricas de Rendimiento
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="rendimiento-grid">
+        <div class="rendimiento-item">
+          <div class="rendimiento-icono">
+            <mat-icon>analytics</mat-icon>
+          </div>
+          <div class="rendimiento-info">
+            <div class="rendimiento-valor">{{ metricasRendimiento().promedioPuntos }}</div>
+            <div class="rendimiento-label">Promedio de Puntos</div>
+          </div>
+        </div>
+        
+        <div class="rendimiento-item">
+          <div class="rendimiento-icono">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </div>
+          <div class="rendimiento-info">
+            <div class="rendimiento-valor">{{ metricasRendimiento().partidoMasAlto }}</div>
+            <div class="rendimiento-label">Partido Más Alto</div>
+          </div>
+        </div>
+        
+        <div class="rendimiento-item">
+          <div class="rendimiento-icono">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </div>
+          <div class="rendimiento-info">
+            <div class="rendimiento-valor">{{ metricasRendimiento().partidoMasBajo }}</div>
+            <div class="rendimiento-label">Partido Más Bajo</div>
+          </div>
+        </div>
+        
+        <div class="rendimiento-item">
+          <div class="rendimiento-icono">
+            <mat-icon>calculate</mat-icon>
+          </div>
+          <div class="rendimiento-info">
+            <div class="rendimiento-valor">{{ formatearNumero(metricasRendimiento().totalPuntos) }}</div>
+            <div class="rendimiento-label">Total Puntos</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Distribución de posiciones -->
+<div class="distribucion-posiciones">
+  <mat-card class="distribucion-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>pie_chart</mat-icon>
+        Distribución por Posiciones
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="posiciones-lista">
+        @for (posicion of Object.entries(estadisticasCalculadas().distribucionPosiciones); track posicion[0]) {
+          <div class="posicion-item">
+            <div class="posicion-info">
+              <div class="posicion-color" [style.background-color]="obtenerColorPosicion(posicion[0])"></div>
+              <div class="posicion-nombre">{{ posicion[0] }}</div>
+            </div>
+            <div class="posicion-datos">
+              <div class="posicion-cantidad">{{ posicion[1] }}</div>
+              <div class="posicion-porcentaje">
+                {{ formatearPorcentaje(posicion[1], estadisticasCalculadas().totalJugadores) }}
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Equipos por conferencia -->
+<div class="equipos-conferencia">
+  <mat-card class="conferencia-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>public</mat-icon>
+        Equipos por Conferencia
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="conferencias-lista">
+        @for (conferencia of Object.entries(estadisticasCalculadas().equiposPorConferencia); track conferencia[0]) {
+          <div class="conferencia-item">
+            <div class="conferencia-info">
+              <mat-icon>location_on</mat-icon>
+              <div class="conferencia-nombre">{{ conferencia[0] }}</div>
+            </div>
+            <div class="conferencia-datos">
+              <div class="conferencia-cantidad">{{ conferencia[1] }}</div>
+              <div class="conferencia-porcentaje">
+                {{ formatearPorcentaje(conferencia[1], estadisticasCalculadas().totalEquipos) }}
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Ranking de equipos -->
+<div class="ranking-equipos">
+  <mat-card class="ranking-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>emoji_events</mat-icon>
+        Ranking de Equipos
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="ranking-lista">
+        @for (equipo of rankingEquipos().slice(0, 5); track equipo.equipoId) {
+          <div class="ranking-item">
+            <div class="ranking-posicion">
+              <span class="posicion-numero">{{ equipo.posicion }}</span>
+            </div>
+            <div class="ranking-info">
+              <div class="ranking-nombre">{{ equipo.nombreEquipo }}</div>
+              <div class="ranking-estadisticas">
+                {{ equipo.partidosGanados }}G - {{ equipo.partidosPerdidos }}P
+              </div>
+            </div>
+            <div class="ranking-porcentaje">
+              <div class="porcentaje-valor">{{ Math.round(equipo.porcentajeVictorias * 10) / 10 }}%</div>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Ranking de jugadores -->
+<div class="ranking-jugadores">
+  <mat-card class="ranking-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>star</mat-icon>
+        Top Jugadores
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="ranking-lista">
+        @for (jugador of rankingJugadores().slice(0, 5); track jugador.jugadorId) {
+          <div class="ranking-item">
+            <div class="ranking-posicion">
+              <span class="posicion-numero">{{ jugador.posicion }}</span>
+            </div>
+            <div class="ranking-info">
+              <div class="ranking-nombre">{{ jugador.nombreJugador }} {{ jugador.apellido }}</div>
+              <div class="ranking-estadisticas">
+                {{ jugador.puntosPorPartido }} PPG
+              </div>
+            </div>
+            <div class="ranking-porcentaje">
+              <div class="porcentaje-valor">{{ Math.round(jugador.puntosPorPartido * 10) / 10 }}</div>
+            </div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

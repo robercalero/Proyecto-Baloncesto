@@ -1,0 +1,145 @@
+<!-- Header del componente -->
+<div class="optimizacion-header">
+  <div class="header-content">
+    <div class="header-titulo">
+      <mat-icon>speed</mat-icon>
+      <h2>Optimización de Rendimiento</h2>
+    </div>
+    
+    <div class="header-acciones">
+      <button mat-button 
+              (click)="ejecutarAnalisisRendimiento()"
+              class="accion-boton">
+        <mat-icon>analytics</mat-icon>
+        Analizar
+      </button>
+      
+      <button mat-button 
+              (click)="exportarReporte()"
+              class="accion-boton">
+        <mat-icon>download</mat-icon>
+        Exportar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Estado general -->
+<div class="estado-general">
+  <mat-card class="estado-card">
+    <mat-card-content>
+      <div class="estado-info">
+        <div class="estado-icono" [style.color]="colorEstado()">
+          <mat-icon>{{ iconoEstado() }}</mat-icon>
+        </div>
+        <div class="estado-datos">
+          <div class="estado-titulo">Estado del Rendimiento</div>
+          <div class="estado-valor" [style.color]="colorEstado()">
+            {{ estadoRendimiento() | titlecase }}
+          </div>
+        </div>
+      </div>
+      
+      <div class="progreso-container">
+        <div class="progreso-info">
+          <span>Optimización: {{ porcentajeOptimizacion() }}%</span>
+        </div>
+        <mat-progress-bar 
+          [value]="porcentajeOptimizacion()"
+          [color]="estadoRendimiento() === 'excelente' ? 'primary' : 'accent'">
+        </mat-progress-bar>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Métricas de rendimiento -->
+<div class="metricas-rendimiento">
+  <h3>Métricas en Tiempo Real</h3>
+  <div class="metricas-grid">
+    @for (metrica of metricasRendimiento(); track metrica.nombre) {
+      <mat-card class="metrica-card">
+        <mat-card-content>
+          <div class="metrica-header">
+            <div class="metrica-icono">
+              <mat-icon>{{ metrica.icono }}</mat-icon>
+            </div>
+            <div class="metrica-tendencia" [style.color]="obtenerColorTendencia(metrica.tendencia)">
+              <mat-icon>{{ obtenerIconoTendencia(metrica.tendencia) }}</mat-icon>
+            </div>
+          </div>
+          
+          <div class="metrica-valor">
+            {{ formatearValor(metrica.valor, metrica.unidad) }}
+          </div>
+          
+          <div class="metrica-nombre">{{ metrica.nombre }}</div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>
+
+<!-- Optimizaciones aplicadas -->
+<div class="optimizaciones-aplicadas">
+  <h3>Optimizaciones Aplicadas</h3>
+  <div class="optimizaciones-lista">
+    @for (optimizacion of optimizacionesAplicadas(); track optimizacion) {
+      <mat-chip class="optimizacion-chip aplicada">
+        <mat-icon>check_circle</mat-icon>
+        {{ optimizacion }}
+      </mat-chip>
+    }
+  </div>
+</div>
+
+<!-- Optimizaciones pendientes -->
+<div class="optimizaciones-pendientes">
+  <h3>Optimizaciones Pendientes</h3>
+  <div class="optimizaciones-lista">
+    @for (optimizacion of optimizacionesPendientes(); track optimizacion) {
+      <mat-chip class="optimizacion-chip pendiente" 
+                (click)="aplicarOptimizacion(optimizacion)">
+        <mat-icon>add_circle</mat-icon>
+        {{ optimizacion }}
+      </mat-chip>
+    }
+  </div>
+</div>
+
+<!-- Recomendaciones -->
+<div class="recomendaciones">
+  <mat-card class="recomendaciones-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>lightbulb</mat-icon>
+        Recomendaciones de Optimización
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="recomendaciones-lista">
+        <div class="recomendacion-item">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>Implementar Virtual Scrolling para listas largas</span>
+        </div>
+        <div class="recomendacion-item">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>Usar Web Workers para operaciones pesadas</span>
+        </div>
+        <div class="recomendacion-item">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>Optimizar el bundle size con tree shaking</span>
+        </div>
+        <div class="recomendacion-item">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>Implementar code splitting por rutas</span>
+        </div>
+        <div class="recomendacion-item">
+          <mat-icon>arrow_forward</mat-icon>
+          <span>Añadir prefetch de datos críticos</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

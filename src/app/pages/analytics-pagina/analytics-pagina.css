@@ -1,0 +1,440 @@
+/* Header de la página */
+.header-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.titulo-seccion {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icono-titulo {
+  font-size: 32px;
+  color: #ffd700;
+}
+
+.titulo-seccion h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.acciones-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Métricas principales */
+.metricas-principales {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.metrica-card {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.metrica-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.metrica-card:nth-child(2) {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.metrica-card:nth-child(3) {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.metrica-card:nth-child(4) {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.metrica-contenido {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.metrica-icono {
+  font-size: 32px;
+  opacity: 0.8;
+}
+
+.metrica-texto {
+  flex: 1;
+}
+
+.metrica-numero {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.metrica-etiqueta {
+  font-size: 14px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Estadísticas de la aplicación */
+.estadisticas-app {
+  margin-bottom: 32px;
+}
+
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.estadistica-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.estadistica-item mat-icon {
+  font-size: 24px;
+  color: #667eea;
+}
+
+.estadistica-info {
+  flex: 1;
+}
+
+.estadistica-valor {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.estadistica-label {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Eventos por tipo */
+.eventos-por-tipo {
+  margin-bottom: 32px;
+}
+
+.sin-datos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: #666;
+}
+
+.sin-datos mat-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.tipos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tipo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.tipo-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tipo-icono {
+  font-size: 20px;
+  color: #667eea;
+}
+
+.tipo-datos {
+  flex: 1;
+}
+
+.tipo-nombre {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+.tipo-cantidad {
+  font-size: 14px;
+  color: #666;
+}
+
+.tipo-porcentaje {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.porcentaje-bar {
+  width: 100px;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.porcentaje-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.porcentaje-texto {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667eea;
+  min-width: 40px;
+}
+
+/* Actividad por hora */
+.actividad-hora {
+  margin-bottom: 32px;
+}
+
+.grafico-horas {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  height: 200px;
+  padding: 20px 0;
+  overflow-x: auto;
+}
+
+.hora-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 40px;
+}
+
+.hora-label {
+  font-size: 12px;
+  color: #666;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.hora-bar {
+  width: 20px;
+  height: 120px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hora-fill {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-radius: 10px;
+  transition: height 0.3s ease;
+}
+
+.nivel-0 { background: #e0e0e0; }
+.nivel-1 { background: #4caf50; }
+.nivel-2 { background: #ff9800; }
+.nivel-3 { background: #f44336; }
+
+.hora-cantidad {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Eventos recientes */
+.eventos-recientes {
+  margin-bottom: 32px;
+}
+
+.eventos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.evento-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.evento-icono {
+  font-size: 20px;
+  color: #667eea;
+  margin-top: 2px;
+}
+
+.evento-contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+.evento-titulo {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.evento-datos {
+  font-size: 12px;
+  color: #666;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evento-timestamp {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header-pagina {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .acciones-header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .metricas-principales {
+    grid-template-columns: 1fr;
+  }
+
+  .estadisticas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tipo-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .tipo-porcentaje {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .grafico-horas {
+    height: 150px;
+  }
+
+  .hora-item {
+    min-width: 30px;
+  }
+
+  .hora-bar {
+    width: 16px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-pagina {
+    padding: 16px;
+  }
+
+  .titulo-seccion h1 {
+    font-size: 24px;
+  }
+
+  .evento-datos {
+    font-size: 10px;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.metrica-card,
+.estadistica-item,
+.tipo-item,
+.evento-item {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.metrica-card:nth-child(1) { animation-delay: 0.1s; }
+.metrica-card:nth-child(2) { animation-delay: 0.2s; }
+.metrica-card:nth-child(3) { animation-delay: 0.3s; }
+.metrica-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Utilidades */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }

@@ -1,0 +1,41 @@
+@if (estadisticas()) {
+  <div class="tabla-estadisticas">
+    <h3>Estadísticas del Equipo</h3>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-label">Partidos Jugados:</span>
+        <span class="stat-value">{{ totalPartidos() }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Victorias:</span>
+        <span class="stat-value victoria">{{ estadisticas()!.ganados }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Derrotas:</span>
+        <span class="stat-value derrota">{{ estadisticas()!.perdidos }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">% Victorias:</span>
+        <span class="stat-value">{{ porcentajeVictorias() }}%</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Puntos a Favor:</span>
+        <span class="stat-value">{{ estadisticas()!.totalPuntosAFavor }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Puntos en Contra:</span>
+        <span class="stat-value">{{ estadisticas()!.totalPuntosEnContra }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Diferencia:</span>
+        <span class="stat-value" [class.positiva]="diferenciaPuntos() > 0" [class.negativa]="diferenciaPuntos() < 0">
+          {{ diferenciaPuntos() > 0 ? '+' : '' }}{{ diferenciaPuntos() }}
+        </span>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="sin-datos">
+    <p>No hay estadísticas disponibles</p>
+  </div>
+}

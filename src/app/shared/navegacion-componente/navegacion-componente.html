@@ -1,0 +1,162 @@
+<!-- Navegación móvil -->
+<div class="navegacion-movil" [class.visible]="menuAbierto()">
+  <div class="navegacion-overlay" (click)="cerrarMenu()"></div>
+  
+  <div class="navegacion-drawer">
+    <div class="navegacion-header">
+      <div class="navegacion-logo">
+        <mat-icon>sports_basketball</mat-icon>
+        <span>Baloncesto Pro</span>
+      </div>
+      <button mat-icon-button (click)="cerrarMenu()" class="cerrar-boton">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <nav class="navegacion-links">
+      @for (item of menuItemsConBadges(); track item.id) {
+        <a mat-button 
+           [routerLink]="item.route"
+           routerLinkActive="activo"
+           (click)="navegarA(item.route)"
+           class="nav-link">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+          @if (item.badge && item.badge > 0) {
+            <mat-icon class="badge-icon" [matBadge]="item.badge" matBadgeColor="warn">
+              notifications
+            </mat-icon>
+          }
+        </a>
+      }
+    </nav>
+  </div>
+</div>
+
+<!-- Navegación desktop -->
+<nav class="navegacion-desktop">
+  <div class="navegacion-contenido">
+    <div class="navegacion-logo">
+      <mat-icon>sports_basketball</mat-icon>
+      <span>Baloncesto Pro</span>
+    </div>
+    
+    <div class="navegacion-links">
+      @for (item of menuItemsConBadges(); track item.id) {
+        <a mat-button 
+           [routerLink]="item.route"
+           routerLinkActive="activo"
+           class="nav-link"
+           [class]="obtenerClaseActiva(item.route)">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+          @if (item.badge && item.badge > 0) {
+            <mat-icon class="badge-icon" [matBadge]="item.badge" matBadgeColor="warn">
+              notifications
+            </mat-icon>
+          }
+        </a>
+      }
+    </div>
+    
+    <div class="navegacion-acciones">
+      <button mat-icon-button 
+              [matMenuTriggerFor]="notificacionesMenu"
+              class="notificaciones-boton">
+        <mat-icon [matBadge]="notificacionesNoLeidas().length" 
+                  matBadgeColor="warn"
+                  matBadgeSize="small">
+          notifications
+        </mat-icon>
+      </button>
+      
+      <button mat-icon-button 
+              [matMenuTriggerFor]="usuarioMenu"
+              class="usuario-boton">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Menú de notificaciones -->
+<mat-menu #notificacionesMenu="matMenu" class="notificaciones-menu">
+  <div class="notificaciones-header">
+    <span>Notificaciones</span>
+    <button mat-icon-button (click)="marcarTodasComoLeidas()">
+      <mat-icon>done_all</mat-icon>
+    </button>
+  </div>
+  
+  <mat-divider></mat-divider>
+  
+  <div class="notificaciones-lista">
+    @if (notificacionesNoLeidas().length === 0) {
+      <div class="sin-notificaciones">
+        <mat-icon>notifications_off</mat-icon>
+        <span>No hay notificaciones</span>
+      </div>
+    } @else {
+      @for (notificacion of notificaciones().slice(0, 5); track notificacion.id) {
+        <div class="notificacion-item" 
+             [class.no-leida]="!notificacion.leida"
+             (click)="marcarComoLeida(notificacion.id)">
+          <div class="notificacion-icono">
+            <mat-icon>{{ obtenerIconoNotificacion(notificacion.tipo) }}</mat-icon>
+          </div>
+          <div class="notificacion-contenido">
+            <div class="notificacion-titulo">{{ notificacion.titulo }}</div>
+            <div class="notificacion-mensaje">{{ notificacion.mensaje }}</div>
+            <div class="notificacion-fecha">{{ formatearFecha(notificacion.fecha) }}</div>
+          </div>
+          @if (!notificacion.leida) {
+            <div class="notificacion-punto"></div>
+          }
+        </div>
+      }
+    }
+  </div>
+  
+  <mat-divider></mat-divider>
+  
+  <div class="notificaciones-footer">
+    <button mat-button routerLink="/notificaciones">
+      Ver todas
+    </button>
+  </div>
+</mat-menu>
+
+<!-- Menú de usuario -->
+<mat-menu #usuarioMenu="matMenu" class="usuario-menu">
+  <div class="usuario-header">
+    <mat-icon>account_circle</mat-icon>
+    <div class="usuario-info">
+      <div class="usuario-nombre">Usuario</div>
+      <div class="usuario-email">usuario@baloncesto.com</div>
+    </div>
+  </div>
+  
+  <mat-divider></mat-divider>
+  
+  <button mat-menu-item (click)="navegarA('/perfil')">
+    <mat-icon>person</mat-icon>
+    <span>Perfil</span>
+  </button>
+  
+  <button mat-menu-item (click)="navegarA('/configuracion')">
+    <mat-icon>settings</mat-icon>
+    <span>Configuración</span>
+  </button>
+  
+  <button mat-menu-item (click)="navegarA('/ayuda')">
+    <mat-icon>help</mat-icon>
+    <span>Ayuda</span>
+  </button>
+  
+  <mat-divider></mat-divider>
+  
+  <button mat-menu-item (click)="cerrarSesion()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar Sesión</span>
+  </button>
+</mat-menu>

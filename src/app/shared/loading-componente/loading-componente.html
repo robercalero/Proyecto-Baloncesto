@@ -1,0 +1,27 @@
+<div class="loading-container" [ngClass]="clasesLoading()">
+  @if (tipo() === 'spinner') {
+    <div class="spinner-container">
+      <mat-spinner [diameter]="obtenerDiametro()" [color]="color()"></mat-spinner>
+    </div>
+  }
+  
+  @if (tipo() === 'dots') {
+    <div class="dots-container">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  }
+  
+  @if (tipo() === 'pulse') {
+    <div class="pulse-container">
+      <div class="pulse-circle"></div>
+    </div>
+  }
+  
+  @if (textoVisible()) {
+    <div class="loading-text">
+      {{ mensaje() }}
+    </div>
+  }
+</div>

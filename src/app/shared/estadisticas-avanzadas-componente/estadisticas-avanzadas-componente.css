@@ -1,0 +1,303 @@
+.estadisticas-generales,
+.metricas-rendimiento,
+.distribucion-posiciones,
+.equipos-conferencia,
+.ranking-equipos,
+.ranking-jugadores {
+  margin-bottom: 24px;
+}
+
+.estadistica-card,
+.rendimiento-card,
+.distribucion-card,
+.conferencia-card,
+.ranking-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.estadistica-card:hover,
+.rendimiento-card:hover,
+.distribucion-card:hover,
+.conferencia-card:hover,
+.ranking-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Métricas grid */
+.metricas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.metrica-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.metrica-item mat-icon {
+  color: var(--color-primary);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.metrica-info {
+  flex: 1;
+}
+
+.metrica-valor {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.metrica-label {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+/* Rendimiento grid */
+.rendimiento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.rendimiento-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.rendimiento-icono mat-icon {
+  color: var(--color-accent);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.rendimiento-info {
+  flex: 1;
+}
+
+.rendimiento-valor {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.rendimiento-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+/* Posiciones */
+.posiciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.posicion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.posicion-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.posicion-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.posicion-nombre {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.posicion-datos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.posicion-cantidad {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.posicion-porcentaje {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Conferencias */
+.conferencias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.conferencia-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.conferencia-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conferencia-info mat-icon {
+  color: var(--color-primary);
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.conferencia-nombre {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.conferencia-datos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.conferencia-cantidad {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.conferencia-porcentaje {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-background);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Rankings */
+.ranking-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease;
+}
+
+.ranking-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-posicion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.posicion-numero {
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.ranking-info {
+  flex: 1;
+}
+
+.ranking-nombre {
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.ranking-estadisticas {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.ranking-porcentaje {
+  text-align: right;
+}
+
+.porcentaje-valor {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .metricas-grid,
+  .rendimiento-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ranking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .ranking-porcentaje {
+    align-self: flex-end;
+  }
+}

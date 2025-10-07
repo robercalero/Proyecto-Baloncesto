@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>🏀 Proyecto Baloncesto</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="Aplicación de gestión de equipos de baloncesto con estadísticas y seguimiento de partidos">
+  <meta name="theme-color" content="#2196f3">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Baloncesto">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    /* Loading spinner */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fafafa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #e3f2fd;
+      border-top: 4px solid #2196f3;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+  <app-root></app-root>
+  <noscript>
+    <div style="text-align: center; padding: 2rem; font-family: Arial, sans-serif;">
+      <h2>JavaScript requerido</h2>
+      <p>Por favor, habilita JavaScript para continuar usando esta aplicación.</p>
+    </div>
+  </noscript>
+  <script>
+    // Ocultar loading cuando la app esté lista
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.opacity = '0';
+          setTimeout(function() {
+            loading.style.display = 'none';
+          }, 300);
+        }
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

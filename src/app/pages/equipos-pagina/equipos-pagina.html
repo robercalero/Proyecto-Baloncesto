@@ -1,0 +1,49 @@
+<h2>Equipos</h2>
+
+@for (equipo of equiposConStats(); track equipo.id) {
+  <section class="equipo-card" [class.seleccionado]="equipoSeleccionado() === equipo.id">
+    <h3>{{ equipo.nombreEquipo }}</h3>
+    
+    <button (click)="seleccionarEquipo(equipo.id)" class="btn-seleccionar">
+      {{ equipoSeleccionado() === equipo.id ? 'Deseleccionar' : 'Ver Detalles' }}
+    </button>
+
+    <!-- Estadísticas totales del equipo -->
+    @if (equipo.stats) {
+      <div class="stats">
+        <p>Partidos ganados: {{ equipo.stats.ganados }}</p>
+        <p>Partidos perdidos: {{ equipo.stats.perdidos }}</p>
+        <p>Puntos a favor: {{ equipo.stats.totalPuntosAFavor }}</p>
+        <p>Puntos en contra: {{ equipo.stats.totalPuntosEnContra }}</p>
+      </div>
+    }
+
+    <!-- Jugadores del equipo -->
+    <div class="jugadores-grid">
+      @for (jugador of equipo.jugadores; track jugador.id) {
+        <app-tarjetas-jugador-componente
+          [jugador]="jugador"
+          (seleccionar)="verDetalleJugador(jugador.id)">
+        </app-tarjetas-jugador-componente>
+      }
+    </div>
+
+    <!-- Detalles del equipo seleccionado -->
+    @if (equipoSeleccionado() === equipo.id) {
+      <div class="detalles-equipo">
+        <h4>Partidos del Equipo</h4>
+        <ul>
+          @for (partido of partidos(); track partido.id) {
+            @if (partido.equipoLocalId === equipo.id || partido.equipoVisitanteId === equipo.id) {
+              <li>
+                {{ partido.equipoLocalId === equipo.id ? 'Local' : 'Visitante' }} vs 
+                {{ partido.equipoLocalId === equipo.id ? partido.equipoVisitanteId : partido.equipoLocalId }}
+                — Resultado: {{ partido.puntosLocal }} : {{ partido.puntosVisitante }} ({{ partido.fecha }})
+              </li>
+            }
+          }
+        </ul>
+      </div>
+    }
+  </section>
+}

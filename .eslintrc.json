@@ -1,0 +1,16 @@
+{
+  "extends": ["@angular-eslint/recommended"],
+  "rules": {
+    "@angular-eslint/no-unused-imports": "off",
+    "@angular-eslint/component-class-suffix": "off",
+    "@angular-eslint/directive-class-suffix": "off"
+  },
+  "overrides": [
+    {
+      "files": ["src/app/app.ts"],
+      "rules": {
+        "@angular-eslint/no-unused-imports": "off"
+      }
+    }
+  ]
+}

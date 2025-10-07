@@ -1,0 +1,370 @@
+<!-- Header de la página -->
+<div class="header-pagina">
+  <div class="titulo-seccion">
+    <mat-icon class="icono-titulo">person</mat-icon>
+    <h1>Gestión de Jugadores</h1>
+  </div>
+  
+  <div class="acciones-header">
+    <button mat-raised-button color="primary" (click)="abrirModalAgregar()">
+      <mat-icon>add</mat-icon>
+      <span>Nuevo Jugador</span>
+    </button>
+    
+    <button mat-icon-button [matMenuTriggerFor]="menuFiltros">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+    
+    <button mat-icon-button [matMenuTriggerFor]="menuVista">
+      <mat-icon>view_module</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- Menú de filtros -->
+<mat-menu #menuFiltros="matMenu">
+  <div class="menu-filtros">
+    <h3>Filtros</h3>
+    
+    <mat-form-field appearance="outline" class="filtro-campo">
+      <mat-label>Buscar jugador</mat-label>
+      <input matInput 
+             [value]="filtroBusqueda()" 
+             (input)="actualizarFiltroBusqueda($event.target.value)"
+             placeholder="Nombre o apellido">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="filtro-campo">
+      <mat-label>Posición</mat-label>
+      <mat-select [value]="filtroPosicion()" (selectionChange)="actualizarFiltroPosicion($event.value)">
+        <mat-option [value]="null">Todas las posiciones</mat-option>
+        @for (posicion of posiciones; track posicion) {
+          <mat-option [value]="posicion">{{ posicion }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="filtro-campo">
+      <mat-label>Conferencia</mat-label>
+      <mat-select [value]="filtroConferencia()" (selectionChange)="actualizarFiltroConferencia($event.value)">
+        <mat-option [value]="null">Todas las conferencias</mat-option>
+        <mat-option value="Este">Conferencia Este</mat-option>
+        <mat-option value="Oeste">Conferencia Oeste</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <div class="acciones-filtros">
+      <button mat-button (click)="limpiarFiltros()">
+        <mat-icon>clear</mat-icon>
+        Limpiar
+      </button>
+    </div>
+  </div>
+</mat-menu>
+
+<!-- Menú de vista -->
+<mat-menu #menuVista="matMenu">
+  <button mat-menu-item (click)="cambiarVista('grid')">
+    <mat-icon>view_module</mat-icon>
+    <span>Vista de tarjetas</span>
+  </button>
+  <button mat-menu-item (click)="cambiarVista('lista')">
+    <mat-icon>view_list</mat-icon>
+    <span>Vista de lista</span>
+  </button>
+  <button mat-menu-item (click)="cambiarVista('tabla')">
+    <mat-icon>table_view</mat-icon>
+    <span>Vista de tabla</span>
+  </button>
+</mat-menu>
+
+<!-- Estadísticas rápidas -->
+<div class="estadisticas-rapidas">
+  <mat-card class="estadistica-card">
+    <mat-card-content>
+      <div class="estadistica-contenido">
+        <mat-icon class="estadistica-icono">person</mat-icon>
+        <div class="estadistica-texto">
+          <div class="estadistica-numero">{{ totalJugadores() }}</div>
+          <div class="estadistica-etiqueta">Total Jugadores</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card class="estadistica-card">
+    <mat-card-content>
+      <div class="estadistica-contenido">
+        <mat-icon class="estadistica-icono">groups</mat-icon>
+        <div class="estadistica-texto">
+          <div class="estadistica-numero">{{ totalEquipos() }}</div>
+          <div class="estadistica-etiqueta">Equipos</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card class="estadistica-card">
+    <mat-card-content>
+      <div class="estadistica-contenido">
+        <mat-icon class="estadistica-icono">emoji_events</mat-icon>
+        <div class="estadistica-texto">
+          <div class="estadistica-numero">{{ jugadoresFiltrados().length }}</div>
+          <div class="estadistica-etiqueta">Filtrados</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Formulario de agregar jugador (colapsible) -->
+@if (mostrarFormulario()) {
+  <mat-card class="formulario-agregar">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>person_add</mat-icon>
+        Agregar Nuevo Jugador
+      </mat-card-title>
+      <button mat-icon-button (click)="cerrarFormulario()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form (ngSubmit)="agregarJugador()" #formJugador="ngForm" class="formulario-jugador">
+        <div class="campos-formulario">
+          <mat-form-field appearance="outline" class="campo-completo">
+            <mat-label>Nombre</mat-label>
+            <input matInput 
+                   [value]="nombreJugador()" 
+                   (input)="actualizarNombreJugador($event.target.value)"
+                   placeholder="Nombre del jugador" 
+                   required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-completo">
+            <mat-label>Apellido</mat-label>
+            <input matInput 
+                   [value]="apellido()" 
+                   (input)="actualizarApellido($event.target.value)"
+                   placeholder="Apellido del jugador" 
+                   required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-medio">
+            <mat-label>Dorsal</mat-label>
+            <input matInput 
+                   type="number" 
+                   [value]="dorsal()" 
+                   (input)="onDorsalChange($event)"
+                   placeholder="Número de dorsal" 
+                   min="0" 
+                   max="99"
+                   required>
+            <mat-icon matSuffix>tag</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-medio">
+            <mat-label>Posición</mat-label>
+            <mat-select [value]="posicionSeleccionada()" (selectionChange)="actualizarPosicion($event.value)">
+              @for (posicion of posiciones; track posicion) {
+                <mat-option [value]="posicion">{{ posicion }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matSuffix>sports</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-completo">
+            <mat-label>Equipo</mat-label>
+            <mat-select [value]="equipoId()" (selectionChange)="onEquipoChange($event)" required>
+              <mat-option [value]="null">Seleccionar equipo</mat-option>
+              @for (equipo of equipos(); track equipo.id) {
+                <mat-option [value]="equipo.id">{{ equipo.nombreEquipo }} ({{ equipo.ciudad }})</mat-option>
+              }
+            </mat-select>
+            <mat-icon matSuffix>groups</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-medio">
+            <mat-label>Altura (cm)</mat-label>
+            <input matInput 
+                   type="number" 
+                   [value]="altura()" 
+                   (input)="actualizarAltura($event.target.value)"
+                   placeholder="Altura en centímetros" 
+                   min="150" 
+                   max="250">
+            <mat-icon matSuffix>height</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-medio">
+            <mat-label>Peso (kg)</mat-label>
+            <input matInput 
+                   type="number" 
+                   [value]="peso()" 
+                   (input)="actualizarPeso($event.target.value)"
+                   placeholder="Peso en kilogramos" 
+                   min="50" 
+                   max="150">
+            <mat-icon matSuffix>monitor_weight</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="campo-completo">
+            <mat-label>Nacionalidad</mat-label>
+            <input matInput 
+                   [value]="nacionalidad()" 
+                   (input)="actualizarNacionalidad($event.target.value)"
+                   placeholder="País de origen">
+            <mat-icon matSuffix>public</mat-icon>
+          </mat-form-field>
+        </div>
+        
+        @if (nombreEquipoSeleccionado()) {
+          <mat-chip-listbox class="equipo-seleccionado">
+            <mat-chip>
+              <mat-icon>groups</mat-icon>
+              {{ nombreEquipoSeleccionado() }}
+            </mat-chip>
+          </mat-chip-listbox>
+        }
+        
+        <div class="acciones-formulario">
+          <button mat-button type="button" (click)="cerrarFormulario()">
+            <mat-icon>cancel</mat-icon>
+            Cancelar
+          </button>
+          <button mat-raised-button 
+                  color="primary" 
+                  type="submit" 
+                  [disabled]="!formularioValido()"
+                  class="btn-agregar">
+            <mat-icon>add</mat-icon>
+            Agregar Jugador
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+}
+
+<!-- Lista de jugadores -->
+<div class="contenedor-jugadores">
+  @if (jugadoresFiltrados().length === 0) {
+    <div class="sin-resultados">
+      <mat-icon class="icono-sin-resultados">person_search</mat-icon>
+      <h3>No se encontraron jugadores</h3>
+      <p>Intenta ajustar los filtros o agregar un nuevo jugador</p>
+      <button mat-raised-button color="primary" (click)="abrirModalAgregar()">
+        <mat-icon>add</mat-icon>
+        Agregar Primer Jugador
+      </button>
+    </div>
+  } @else {
+    <!-- Vista de tarjetas -->
+    @if (vistaActual() === 'grid') {
+      <div class="grid-jugadores">
+        @for (jugador of jugadoresFiltrados(); track jugador.id) {
+          <app-tarjetas-jugador-componente
+            [jugador]="jugador"
+            (seleccionar)="verDetalle(jugador.id)"
+            (editar)="editarJugador(jugador.id)"
+            (eliminar)="eliminarJugador(jugador.id)">
+          </app-tarjetas-jugador-componente>
+        }
+      </div>
+    }
+    
+    <!-- Vista de lista -->
+    @if (vistaActual() === 'lista') {
+      <div class="lista-jugadores">
+        @for (jugador of jugadoresFiltrados(); track jugador.id) {
+          <mat-card class="item-lista-jugador" (click)="verDetalle(jugador.id)">
+            <mat-card-content>
+              <div class="info-jugador-lista">
+                <div class="avatar-jugador">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="datos-jugador">
+                  <h3>{{ jugador.nombreJugador }} {{ jugador.apellido }}</h3>
+                  <p>{{ jugador.posicion }} • Dorsal #{{ jugador.dorsal }}</p>
+                  <p>{{ obtenerNombreEquipo(jugador.equipoId) }}</p>
+                </div>
+                <div class="acciones-jugador">
+                  <button mat-icon-button (click)="editarJugador(jugador.id); $event.stopPropagation()">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button (click)="eliminarJugador(jugador.id); $event.stopPropagation()">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+    
+    <!-- Vista de tabla -->
+    @if (vistaActual() === 'tabla') {
+      <div class="tabla-jugadores">
+        <table mat-table [dataSource]="jugadoresFiltrados()" class="tabla-completa">
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let jugador">
+              {{ jugador.nombreJugador }} {{ jugador.apellido }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="posicion">
+            <th mat-header-cell *matHeaderCellDef>Posición</th>
+            <td mat-cell *matCellDef="let jugador">
+              <mat-chip>{{ jugador.posicion }}</mat-chip>
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="dorsal">
+            <th mat-header-cell *matHeaderCellDef>Dorsal</th>
+            <td mat-cell *matCellDef="let jugador">
+              <span class="dorsal-numero">#{{ jugador.dorsal }}</span>
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="equipo">
+            <th mat-header-cell *matHeaderCellDef>Equipo</th>
+            <td mat-cell *matCellDef="let jugador">
+              {{ obtenerNombreEquipo(jugador.equipoId) }}
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="altura">
+            <th mat-header-cell *matHeaderCellDef>Altura</th>
+            <td mat-cell *matCellDef="let jugador">
+              {{ jugador.altura }} cm
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let jugador">
+              <button mat-icon-button (click)="verDetalle(jugador.id)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button (click)="editarJugador(jugador.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="eliminarJugador(jugador.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <tr mat-header-row *matHeaderRowDef="columnasTabla"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnasTabla;"></tr>
+        </table>
+      </div>
+    }
+  }
+</div>

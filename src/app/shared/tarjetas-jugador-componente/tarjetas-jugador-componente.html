@@ -1,0 +1,9 @@
+@if (jugador(); as jugadorData) {
+  <div class="tarjeta-jugador" (click)="onSeleccionar()">
+    <div class="dorsal">{{ jugadorData.dorsal }}</div>
+    <div class="info">
+      <h4>{{ jugadorData.nombreJugador }} {{ jugadorData.apellido }}</h4>
+      <p class="equipo">Equipo ID: {{ jugadorData.equipoId }}</p>
+    </div>
+  </div>
+}

@@ -1,0 +1,38 @@
+/* Componente de Gráficos */
+.grafico-container {
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-light);
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.grafico-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grafico-container {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .grafico-container {
+    padding: var(--spacing-sm);
+  }
+}

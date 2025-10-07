@@ -1,0 +1,230 @@
+<!-- Header de la página -->
+<div class="header-pagina">
+  <div class="titulo-seccion">
+    <mat-icon class="icono-titulo">analytics</mat-icon>
+    <h1>Analytics y Métricas</h1>
+  </div>
+  
+  <div class="acciones-header">
+    <button mat-raised-button color="primary" (click)="exportarDatos()">
+      <mat-icon>download</mat-icon>
+      <span>Exportar Datos</span>
+    </button>
+    
+    <button mat-button color="warn" (click)="limpiarDatos()">
+      <mat-icon>delete</mat-icon>
+      <span>Limpiar Datos</span>
+    </button>
+  </div>
+</div>
+
+<!-- Métricas principales -->
+<div class="metricas-principales">
+  <mat-card class="metrica-card">
+    <mat-card-content>
+      <div class="metrica-contenido">
+        <mat-icon class="metrica-icono">event</mat-icon>
+        <div class="metrica-texto">
+          <div class="metrica-numero">{{ metricasRendimiento().totalEventos }}</div>
+          <div class="metrica-etiqueta">Total Eventos</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card class="metrica-card">
+    <mat-card-content>
+      <div class="metrica-contenido">
+        <mat-icon class="metrica-icono">navigation</mat-icon>
+        <div class="metrica-texto">
+          <div class="metrica-numero">{{ metricasRendimiento().eventosNavegacion }}</div>
+          <div class="metrica-etiqueta">Navegaciones</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card class="metrica-card">
+    <mat-card-content>
+      <div class="metrica-contenido">
+        <mat-icon class="metrica-icono">error</mat-icon>
+        <div class="metrica-texto">
+          <div class="metrica-numero">{{ metricasRendimiento().eventosError }}</div>
+          <div class="metrica-etiqueta">Errores</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <mat-card class="metrica-card">
+    <mat-card-content>
+      <div class="metrica-contenido">
+        <mat-icon class="metrica-icono">trending_up</mat-icon>
+        <div class="metrica-texto">
+          <div class="metrica-numero">{{ metricasRendimiento().tasaErrores | number:'1.1-1' }}%</div>
+          <div class="metrica-etiqueta">Tasa de Errores</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Estadísticas de la aplicación -->
+<div class="estadisticas-app">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>dashboard</mat-icon>
+        Estadísticas de la Aplicación
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="estadisticas-grid">
+        <div class="estadistica-item">
+          <mat-icon>person</mat-icon>
+          <div class="estadistica-info">
+            <div class="estadistica-valor">{{ estadisticasApp().totalJugadores }}</div>
+            <div class="estadistica-label">Total Jugadores</div>
+          </div>
+        </div>
+        
+        <div class="estadistica-item">
+          <mat-icon>groups</mat-icon>
+          <div class="estadistica-info">
+            <div class="estadistica-valor">{{ estadisticasApp().totalEquipos }}</div>
+            <div class="estadistica-label">Total Equipos</div>
+          </div>
+        </div>
+        
+        <div class="estadistica-item">
+          <mat-icon>sports</mat-icon>
+          <div class="estadistica-info">
+            <div class="estadistica-valor">{{ estadisticasApp().totalPartidos }}</div>
+            <div class="estadistica-label">Total Partidos</div>
+          </div>
+        </div>
+        
+        <div class="estadistica-item">
+          <mat-icon>check_circle</mat-icon>
+          <div class="estadistica-info">
+            <div class="estadistica-valor">{{ estadisticasApp().jugadoresActivos }}</div>
+            <div class="estadistica-label">Jugadores Activos</div>
+          </div>
+        </div>
+        
+        <div class="estadistica-item">
+          <mat-icon>flag</mat-icon>
+          <div class="estadistica-info">
+            <div class="estadistica-valor">{{ estadisticasApp().partidosFinalizados }}</div>
+            <div class="estadistica-label">Partidos Finalizados</div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Eventos por tipo -->
+<div class="eventos-por-tipo">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>category</mat-icon>
+        Eventos por Tipo
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      @if (eventosPorTipo().length === 0) {
+        <div class="sin-datos">
+          <mat-icon>info</mat-icon>
+          <p>No hay eventos registrados</p>
+        </div>
+      } @else {
+        <div class="tipos-lista">
+          @for (tipo of eventosPorTipo(); track tipo.tipo) {
+            <div class="tipo-item">
+              <div class="tipo-info">
+                <mat-icon class="tipo-icono">{{ obtenerIconoTipo(tipo.tipo) }}</mat-icon>
+                <div class="tipo-datos">
+                  <div class="tipo-nombre">{{ tipo.tipo }}</div>
+                  <div class="tipo-cantidad">{{ tipo.cantidad }} eventos</div>
+                </div>
+              </div>
+              <div class="tipo-porcentaje">
+                <div class="porcentaje-bar">
+                  <div class="porcentaje-fill" [style.width.%]="tipo.porcentaje"></div>
+                </div>
+                <span class="porcentaje-texto">{{ tipo.porcentaje | number:'1.1-1' }}%</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Actividad por hora -->
+<div class="actividad-hora">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>schedule</mat-icon>
+        Actividad por Hora
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="grafico-horas">
+        @for (hora of actividadPorHora(); track hora.hora) {
+          <div class="hora-item">
+            <div class="hora-label">{{ hora.hora }}:00</div>
+            <div class="hora-bar">
+              <div class="hora-fill" 
+                   [style.height.%]="obtenerAlturaBarra(hora.cantidad)"
+                   [class]="'nivel-' + obtenerNivelActividad(hora.cantidad)">
+              </div>
+            </div>
+            <div class="hora-cantidad">{{ hora.cantidad }}</div>
+          </div>
+        }
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- Eventos recientes -->
+<div class="eventos-recientes">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>history</mat-icon>
+        Eventos Recientes
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      @if (eventosRecientes().length === 0) {
+        <div class="sin-datos">
+          <mat-icon>info</mat-icon>
+          <p>No hay eventos recientes</p>
+        </div>
+      } @else {
+        <div class="eventos-lista">
+          @for (evento of eventosRecientes(); track evento.id) {
+            <div class="evento-item">
+              <mat-icon class="evento-icono">{{ obtenerIconoTipo(evento.tipo) }}</mat-icon>
+              <div class="evento-contenido">
+                <div class="evento-titulo">{{ evento.tipo }} - {{ evento.accion }}</div>
+                <div class="evento-datos">{{ evento.datos | json }}</div>
+                <div class="evento-timestamp">{{ formatearTimestamp(evento.timestamp) }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

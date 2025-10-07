@@ -1,0 +1,159 @@
+/* Página de Equipos */
+h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+/* Cards de equipos */
+.equipo-card {
+  background: var(--surface-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-light);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.equipo-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.equipo-card.seleccionado {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-medium);
+}
+
+.equipo-card h3 {
+  color: var(--primary-color);
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Botón de selección */
+.btn-seleccionar {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-small);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 36px;
+}
+
+.btn-seleccionar:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Estadísticas */
+.stats {
+  background: var(--background-color);
+  border-radius: var(--border-radius-small);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.stats p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.stats p strong {
+  color: var(--text-primary);
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Grid de jugadores */
+.jugadores-grid {
+  display: grid;
+  gap: var(--spacing-sm);
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  margin-bottom: var(--spacing-md);
+}
+
+/* Detalles del equipo */
+.detalles-equipo {
+  background: var(--background-color);
+  border-radius: var(--border-radius-small);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  border-left: 4px solid var(--primary-color);
+}
+
+.detalles-equipo h4 {
+  color: var(--primary-color);
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.2rem;
+}
+
+.detalles-equipo ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detalles-equipo li {
+  background: var(--surface-color);
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-xs);
+  border-radius: var(--border-radius-small);
+  border-left: 3px solid var(--success-color);
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .equipo-card {
+    padding: var(--spacing-md);
+  }
+  
+  .equipo-card h3 {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+  
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .jugadores-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .equipo-card {
+    padding: var(--spacing-sm);
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .btn-seleccionar {
+    width: 100%;
+  }
+}

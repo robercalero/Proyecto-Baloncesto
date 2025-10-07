@@ -1,0 +1,266 @@
+<!-- Header del Dashboard -->
+<div class="dashboard-header">
+  <div class="header-content">
+    <div class="header-titulo">
+      <mat-icon>dashboard</mat-icon>
+      <h1>Dashboard</h1>
+    </div>
+    
+    <div class="header-acciones">
+      <button mat-raised-button 
+              color="primary"
+              (click)="navegarA('/jugadores')">
+        <mat-icon>person_add</mat-icon>
+        Nuevo Jugador
+      </button>
+      
+      <button mat-raised-button 
+              color="accent"
+              (click)="navegarA('/partidos')">
+        <mat-icon>event</mat-icon>
+        Nuevo Partido
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Navegación de pestañas -->
+<div class="dashboard-navegacion">
+  <mat-tab-group [selectedIndex]="vistaActual() === 'resumen' ? 0 : vistaActual() === 'estadisticas' ? 1 : 2" 
+                 (selectedIndexChange)="cambiarVista($event === 0 ? 'resumen' : $event === 1 ? 'estadisticas' : 'ranking')">
+    
+    <!-- Pestaña Resumen -->
+    <mat-tab label="Resumen">
+      <div class="dashboard-content">
+        <!-- Métricas principales -->
+        <div class="metricas-grid">
+          @for (metrica of metricasPrincipales(); track metrica.titulo) {
+            <mat-card class="metrica-card" [class]="'metrica-' + metrica.color">
+              <mat-card-content>
+                <div class="metrica-header">
+                  <div class="metrica-icono">
+                    <mat-icon>{{ metrica.icono }}</mat-icon>
+                  </div>
+                  <div class="metrica-tendencia" [style.color]="obtenerColorTendencia(metrica.tendencia)">
+                    <mat-icon>{{ obtenerIconoTendencia(metrica.tendencia) }}</mat-icon>
+                  </div>
+                </div>
+                
+                <div class="metrica-valor">{{ metrica.valor }}</div>
+                <div class="metrica-titulo">{{ metrica.titulo }}</div>
+                
+                @if (metrica.cambio) {
+                  <div class="metrica-cambio" [style.color]="obtenerColorTendencia(metrica.tendencia)">
+                    {{ metrica.cambio > 0 ? '+' : '' }}{{ metrica.cambio }}%
+                  </div>
+                }
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+
+        <!-- Acciones rápidas -->
+        <div class="acciones-rapidas">
+          <h2>Acciones Rápidas</h2>
+          <div class="acciones-grid">
+            @for (accion of accionesRapidas(); track accion.id) {
+              <mat-card class="accion-card" 
+                        [class]="'accion-' + accion.color"
+                        (click)="navegarA(accion.ruta)">
+                <mat-card-content>
+                  <div class="accion-icono">
+                    <mat-icon>{{ accion.icono }}</mat-icon>
+                  </div>
+                  <div class="accion-info">
+                    <div class="accion-titulo">{{ accion.titulo }}</div>
+                    <div class="accion-descripcion">{{ accion.descripcion }}</div>
+                  </div>
+                  <div class="accion-flecha">
+                    <mat-icon>arrow_forward</mat-icon>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        </div>
+
+        <!-- Contenido en dos columnas -->
+        <div class="dashboard-columnas">
+          <!-- Partidos recientes -->
+          <div class="partidos-recientes">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>sports</mat-icon>
+                  Partidos Recientes
+                </mat-card-title>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="partidos-lista">
+                  @if (partidosRecientes().length === 0) {
+                    <div class="sin-datos">
+                      <mat-icon>sports</mat-icon>
+                      <span>No hay partidos recientes</span>
+                    </div>
+                  } @else {
+                    @for (partido of partidosRecientes(); track partido.id) {
+                      <div class="partido-item">
+                        <div class="partido-equipos">
+                          <div class="equipo-local">
+                            <span class="equipo-nombre">{{ obtenerNombreEquipo(partido.equipoLocalId) }}</span>
+                            <span class="equipo-puntos">{{ partido.puntosLocal }}</span>
+                          </div>
+                          <div class="partido-vs">vs</div>
+                          <div class="equipo-visitante">
+                            <span class="equipo-puntos">{{ partido.puntosVisitante }}</span>
+                            <span class="equipo-nombre">{{ obtenerNombreEquipo(partido.equipoVisitanteId) }}</span>
+                          </div>
+                        </div>
+                        
+                        <div class="partido-info">
+                          <div class="partido-fecha">{{ formatearFecha(partido.fecha) }}</div>
+                          <div class="partido-estado" [style.color]="obtenerColorEstado(partido.estado)">
+                            {{ partido.estado }}
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  }
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <!-- Jugadores destacados mas-->
+          <div class="jugadores-destacados">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>star</mat-icon>
+                  Jugadores Destacados
+                </mat-card-title>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="jugadores-lista">
+                  @if (jugadoresDestacados().length === 0) {
+                    <div class="sin-datos">
+                      <mat-icon>person</mat-icon>
+                      <span>No hay jugadores destacados</span>
+                    </div>
+                  } @else {
+                    @for (jugador of jugadoresDestacados(); track jugador.jugadorId) {
+                      <div class="jugador-item">
+                        <div class="jugador-posicion">
+                          <span class="posicion-numero">{{ jugador.posicion }}</span>
+                        </div>
+                        <div class="jugador-info">
+                          <div class="jugador-nombre">{{ obtenerNombreJugador(jugador.jugadorId) }}</div>
+                          <div class="jugador-estadisticas">
+                            {{ jugador.puntosPorPartido }} PPG
+                          </div>
+                        </div>
+                        <div class="jugador-puntos">
+                          <mat-icon>star</mat-icon>
+                          <span>{{ Math.round(jugador.puntosPorPartido * 10) / 10 }}</span>
+                        </div>
+                      </div>
+                    }
+                  }
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Pestaña Estadísticas -->
+    <mat-tab label="Estadísticas">
+      <div class="estadisticas-content">
+        <app-estadisticas-avanzadas-componente></app-estadisticas-avanzadas-componente>
+      </div>
+    </mat-tab>
+
+    <!-- Pestaña Ranking -->
+    <mat-tab label="Ranking">
+      <div class="ranking-content">
+        <div class="ranking-grid">
+          <!-- Ranking de equipos -->
+          <mat-card class="ranking-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>emoji_events</mat-icon>
+                Ranking de Equipos
+              </mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="ranking-lista">
+                @for (equipo of equiposLideres(); track equipo.equipoId) {
+                  <div class="ranking-item">
+                    <div class="ranking-posicion">
+                      <span class="posicion-numero">{{ equipo.posicion }}</span>
+                    </div>
+                    <div class="ranking-info">
+                      <div class="ranking-nombre">{{ equipo.nombreEquipo }}</div>
+                      <div class="ranking-estadisticas">
+                        {{ equipo.partidosGanados }}G - {{ equipo.partidosPerdidos }}P
+                      </div>
+                    </div>
+                    <div class="ranking-porcentaje">
+                      <div class="porcentaje-valor">{{ Math.round(equipo.porcentajeVictorias * 10) / 10 }}%</div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Ranking de jugadores -->
+          <mat-card class="ranking-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>star</mat-icon>
+                Top Jugadores
+              </mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="ranking-lista">
+                @for (jugador of jugadoresDestacados(); track jugador.jugadorId) {
+                  <div class="ranking-item">
+                    <div class="ranking-posicion">
+                      <span class="posicion-numero">{{ jugador.posicion }}</span>
+                    </div>
+                    <div class="ranking-info">
+                      <div class="ranking-nombre">{{ obtenerNombreJugador(jugador.jugadorId) }}</div>
+                      <div class="ranking-estadisticas">
+                        {{ jugador.puntosPorPartido }} PPG
+                      </div>
+                    </div>
+                    <div class="ranking-porcentaje">
+                      <div class="porcentaje-valor">{{ Math.round(jugador.puntosPorPartido * 10) / 10 }}</div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<!-- Loading overlay -->
+@if (cargando()) {
+  <div class="loading-overlay">
+    <app-loading-componente 
+      mensaje="Cargando dashboard..."
+      tipo="spinner"
+      tamaño="large">
+    </app-loading-componente>
+  </div>
+}

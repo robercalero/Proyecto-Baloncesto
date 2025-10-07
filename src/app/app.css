@@ -1,0 +1,380 @@
+/* Variables CSS para consistencia */
+:root {
+  --color-primary: #1976d2;
+  --color-primary-dark: #1565c0;
+  --color-accent: #ff4081;
+  --color-warn: #f44336;
+  --color-success: #4caf50;
+  --color-background: #fafafa;
+  --color-surface: #ffffff;
+  --color-text: #212121;
+  --color-text-secondary: #757575;
+  --border-radius: 8px;
+  --shadow: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-elevated: 0 4px 8px rgba(0,0,0,0.15);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header principal */
+.header-principal {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+.header-contenido {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.logo-titulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.logo-icono {
+  font-size: 32px;
+  color: #ffd700;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.titulo-app {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.espaciador {
+  flex: 1 1 auto;
+}
+
+/* Navegación principal */
+.navegacion-principal {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-link.activo {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow);
+}
+
+/* Acciones del header */
+.acciones-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-notificaciones {
+  position: relative;
+  color: white;
+}
+
+/* Menú de notificaciones */
+.menu-notificaciones {
+  min-width: 350px;
+  max-width: 400px;
+}
+
+.menu-notificaciones-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+}
+
+.menu-notificaciones-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.sin-notificaciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
+  color: var(--color-text-secondary);
+}
+
+.sin-notificaciones mat-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.contenido-notificacion {
+  flex: 1;
+  min-width: 0;
+}
+
+.titulo-notificacion {
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.mensaje-notificacion {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.fecha-notificacion {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.icono-eliminar {
+  color: var(--color-text-secondary);
+  opacity: 0.7;
+  transition: var(--transition);
+}
+
+.icono-eliminar:hover {
+  color: var(--color-warn);
+  opacity: 1;
+}
+
+/* Iconos de notificaciones */
+.icono-partido { color: #2196f3; }
+.icono-jugador { color: #4caf50; }
+.icono-equipo { color: #ff9800; }
+.icono-estadistica { color: #9c27b0; }
+.icono-record { color: #ffd700; }
+.icono-sistema { color: #607d8b; }
+
+/* Contenido principal */
+.contenido-principal {
+  min-height: calc(100vh - 64px - 200px);
+  background-color: var(--color-background);
+}
+
+.contenedor-pagina {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Pie de página */
+.pie-pagina {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  margin-top: 48px;
+}
+
+.contenido-pie {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px 24px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.info-empresa {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-pie {
+  font-size: 48px;
+  color: #ffd700;
+}
+
+.texto-empresa h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.texto-empresa p {
+  margin: 0;
+  color: #bdc3c7;
+  font-size: 14px;
+}
+
+.enlaces-pie {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.columna-enlaces h5 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ecf0f1;
+}
+
+.columna-enlaces a {
+  display: block;
+  color: #bdc3c7;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: var(--transition);
+  font-size: 14px;
+}
+
+.columna-enlaces a:hover {
+  color: white;
+  transform: translateX(4px);
+}
+
+.redes-sociales h5 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ecf0f1;
+}
+
+.iconos-redes {
+  display: flex;
+  gap: 8px;
+}
+
+.iconos-redes button {
+  color: #bdc3c7;
+  transition: var(--transition);
+}
+
+.iconos-redes button:hover {
+  color: white;
+  transform: scale(1.1);
+}
+
+.copyright {
+  border-top: 1px solid #34495e;
+  padding: 24px;
+  text-align: center;
+  color: #95a5a6;
+  font-size: 14px;
+}
+
+.copyright p {
+  margin: 4px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header-contenido {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .navegacion-principal {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-link span {
+    display: none;
+  }
+
+  .contenido-pie {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .enlaces-pie {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .contenedor-pagina {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-titulo {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .titulo-app {
+    font-size: 20px;
+  }
+
+  .menu-notificaciones {
+    min-width: 280px;
+    max-width: 320px;
+  }
+}
+
+/* Animaciones y transiciones */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Mejoras de accesibilidad */
+.nav-link:focus,
+.btn-notificaciones:focus {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+}
+
+/* Estados de carga */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Utilidades */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }

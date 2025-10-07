@@ -1,0 +1,233 @@
+<!-- Header de la página -->
+<div class="optimizacion-header">
+  <div class="header-content">
+    <div class="header-titulo">
+      <mat-icon>tune</mat-icon>
+      <h1>Optimización Avanzada</h1>
+    </div>
+    
+    <div class="header-acciones">
+      <button mat-raised-button 
+              color="primary"
+              (click)="ejecutarAnalisisCompleto()">
+        <mat-icon>analytics</mat-icon>
+        Analizar
+      </button>
+      
+      <button mat-raised-button 
+              color="accent"
+              (click)="exportarReporte()">
+        <mat-icon>download</mat-icon>
+        Exportar
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Navegación por pestañas -->
+<div class="optimizacion-navegacion">
+  <mat-tab-group [selectedIndex]="vistaActual() === 'metricas' ? 0 : vistaActual() === 'optimizaciones' ? 1 : 2" 
+                 (selectedIndexChange)="cambiarVista($event === 0 ? 'metricas' : $event === 1 ? 'optimizaciones' : 'configuracion')">
+    
+    <!-- Pestaña Métricas -->
+    <mat-tab label="Métricas">
+      <div class="metricas-content">
+        <app-optimizacion-rendimiento></app-optimizacion-rendimiento>
+      </div>
+    </mat-tab>
+
+    <!-- Pestaña Optimizaciones -->
+    <mat-tab label="Optimizaciones">
+      <div class="optimizaciones-content">
+        <!-- Filtros -->
+        <div class="filtros-container">
+          <div class="filtros-row">
+            <mat-form-field appearance="outline">
+              <mat-label>Categoría</mat-label>
+              <mat-select [value]="categoriaFiltro()" 
+                         (selectionChange)="cambiarCategoriaFiltro($event.value)">
+                <mat-option value="todas">Todas</mat-option>
+                @for (categoria of categorias(); track categoria.valor) {
+                  <mat-option [value]="categoria.valor">{{ categoria.etiqueta }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Impacto</mat-label>
+              <mat-select [value]="impactoFiltro()" 
+                         (selectionChange)="cambiarImpactoFiltro($event.value)">
+                <mat-option value="todos">Todos</mat-option>
+                @for (impacto of impactos(); track impacto.valor) {
+                  <mat-option [value]="impacto.valor">{{ impacto.etiqueta }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="estadisticas-container">
+          <mat-card class="estadistica-card">
+            <mat-card-content>
+              <div class="estadisticas-row">
+                <div class="estadistica-item">
+                  <div class="estadistica-valor">{{ estadisticas().total }}</div>
+                  <div class="estadistica-label">Total</div>
+                </div>
+                <div class="estadistica-item">
+                  <div class="estadistica-valor">{{ estadisticas().aplicadas }}</div>
+                  <div class="estadistica-label">Aplicadas</div>
+                </div>
+                <div class="estadistica-item">
+                  <div class="estadistica-valor">{{ estadisticas().pendientes }}</div>
+                  <div class="estadistica-label">Pendientes</div>
+                </div>
+                <div class="estadistica-item">
+                  <div class="estadistica-valor">{{ estadisticas().porcentaje }}%</div>
+                  <div class="estadistica-label">Completado</div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <!-- Lista de optimizaciones -->
+        <div class="optimizaciones-lista">
+          @for (optimizacion of optimizacionesFiltradas(); track optimizacion.id) {
+            <mat-card class="optimizacion-card" 
+                      [class.aplicada]="optimizacion.aplicada">
+              <mat-card-content>
+                <div class="optimizacion-header">
+                  <div class="optimizacion-info">
+                    <div class="optimizacion-titulo">
+                      <mat-icon [style.color]="obtenerColorCategoria(optimizacion.categoria)">
+                        {{ obtenerIconoCategoria(optimizacion.categoria) }}
+                      </mat-icon>
+                      <span>{{ optimizacion.nombre }}</span>
+                    </div>
+                    <div class="optimizacion-descripcion">{{ optimizacion.descripcion }}</div>
+                  </div>
+                  
+                  <div class="optimizacion-acciones">
+                    <mat-chip [style.background-color]="obtenerColorImpacto(optimizacion.impacto)"
+                             [style.color]="'white'">
+                      <mat-icon>{{ obtenerIconoImpacto(optimizacion.impacto) }}</mat-icon>
+                      {{ optimizacion.impacto | titlecase }}
+                    </mat-chip>
+                    
+                    @if (optimizacion.aplicada) {
+                      <button mat-icon-button 
+                              color="warn"
+                              (click)="desaplicarOptimizacion(optimizacion.id)"
+                              matTooltip="Desaplicar">
+                        <mat-icon>remove_circle</mat-icon>
+                      </button>
+                    } @else {
+                      <button mat-icon-button 
+                              color="primary"
+                              (click)="aplicarOptimizacion(optimizacion.id)"
+                              matTooltip="Aplicar">
+                        <mat-icon>add_circle</mat-icon>
+                      </button>
+                    }
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Pestaña Configuración -->
+    <mat-tab label="Configuración">
+      <div class="configuracion-content">
+        <div class="configuracion-grid">
+          <!-- Configuración de monitoreo -->
+          <mat-card class="configuracion-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>monitor</mat-icon>
+                Monitoreo
+              </mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="configuracion-item">
+                <mat-slide-toggle 
+                  [checked]="configuracion().monitoreoActivo"
+                  (change)="actualizarConfiguracion({ monitoreoActivo: $event.checked })">
+                  Monitoreo Activo
+                </mat-slide-toggle>
+              </div>
+              
+              <div class="configuracion-item">
+                <mat-form-field appearance="outline">
+                  <mat-label>Intervalo de Actualización (ms)</mat-label>
+                  <input matInput 
+                         type="number"
+                         [value]="configuracion().intervaloActualizacion"
+                         (input)="actualizarConfiguracion({ intervaloActualizacion: +$event.target.value })">
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Configuración de rendimiento -->
+          <mat-card class="configuracion-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>speed</mat-icon>
+                Rendimiento
+              </mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="configuracion-item">
+                <mat-form-field appearance="outline">
+                  <mat-label>Umbral de Rendimiento (%)</mat-label>
+                  <input matInput 
+                         type="number"
+                         [value]="configuracion().umbralRendimiento"
+                         (input)="actualizarConfiguracion({ umbralRendimiento: +$event.target.value })">
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <!-- Recomendaciones -->
+          <mat-card class="configuracion-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>lightbulb</mat-icon>
+                Recomendaciones
+              </mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="recomendaciones-lista">
+                @for (recomendacion of recomendaciones(); track recomendacion.id) {
+                  <div class="recomendacion-item">
+                    <mat-icon [style.color]="obtenerColorImpacto(recomendacion.impacto)">
+                      {{ obtenerIconoImpacto(recomendacion.impacto) }}
+                    </mat-icon>
+                    <div class="recomendacion-info">
+                      <div class="recomendacion-titulo">{{ recomendacion.nombre }}</div>
+                      <div class="recomendacion-descripcion">{{ recomendacion.descripcion }}</div>
+                    </div>
+                    <button mat-icon-button 
+                            color="primary"
+                            (click)="aplicarOptimizacion(recomendacion.id)">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                }
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

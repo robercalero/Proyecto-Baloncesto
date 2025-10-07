@@ -1,0 +1,96 @@
+<h2>Partidos</h2>
+
+<!-- Formulario para añadir partido -->
+<form (ngSubmit)="agregarPartido()">
+  <label>
+    Equipo Local:
+    <select 
+      [value]="equipoLocalId()" 
+      (change)="onEquipoLocalChange($event)"
+      required>
+      <option value="">-- Selecciona --</option>
+      @for (e of equipos(); track e.id) {
+        <option [value]="e.id">{{ e.nombreEquipo }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Equipo Visitante:
+    <select 
+      [value]="equipoVisitanteId()" 
+      (change)="onEquipoVisitanteChange($event)"
+      required>
+      <option value="">-- Selecciona --</option>
+      @for (e of equipos(); track e.id) {
+        <option [value]="e.id">{{ e.nombreEquipo }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Puntos Local:
+    <input 
+      type="number" 
+      [value]="puntosLocal()" 
+      (input)="actualizarPuntosLocal(+$event.target.value || null)"
+      required>
+  </label>
+
+  <label>
+    Puntos Visitante:
+    <input 
+      type="number" 
+      [value]="puntosVisitante()" 
+      (input)="actualizarPuntosVisitante(+$event.target.value || null)"
+      required>
+  </label>
+
+  <label>
+    Fecha:
+    <input 
+      type="date" 
+      [value]="fecha()" 
+      (input)="actualizarFecha($event.target.value)"
+      required>
+  </label>
+
+  <button type="submit" [disabled]="!formularioValido()">Añadir Partido</button>
+</form>
+
+@if (nombreEquipoLocal() && nombreEquipoVisitante()) {
+  <p class="partido-preview">
+    Partido: {{ nombreEquipoLocal() }} vs {{ nombreEquipoVisitante() }}
+  </p>
+}
+
+<hr>
+
+<!-- Lista de partidos -->
+@for (partido of partidosCompletos(); track partido.id) {
+  <section class="partido-card">
+    <h3>{{ partido.nombreEquipoLocal }} vs {{ partido.nombreEquipoVisitante }}</h3>
+    <p>Fecha: {{ partido.fecha }}</p>
+    <p>Resultado: {{ partido.puntosLocal }} : {{ partido.puntosVisitante }}</p>
+    <p class="ganador">Ganador: {{ partido.ganador }}</p>
+
+    <!-- Estadísticas resumidas de cada equipo -->
+    <div class="stats-equipos">
+      @if (tienda.estadisticasEquipo(partido.equipoLocalId); as statsLocal) {
+        <div class="stats-equipo">
+          <h4>{{ partido.nombreEquipoLocal }} (Local)</h4>
+          <p>Ganados: {{ statsLocal.ganados }}, Perdidos: {{ statsLocal.perdidos }}</p>
+          <p>PF: {{ statsLocal.totalPuntosAFavor }}, PC: {{ statsLocal.totalPuntosEnContra }}</p>
+        </div>
+      }
+
+      @if (tienda.estadisticasEquipo(partido.equipoVisitanteId); as statsVisitante) {
+        <div class="stats-equipo">
+          <h4>{{ partido.nombreEquipoVisitante }} (Visitante)</h4>
+          <p>Ganados: {{ statsVisitante.ganados }}, Perdidos: {{ statsVisitante.perdidos }}</p>
+          <p>PF: {{ statsVisitante.totalPuntosAFavor }}, PC: {{ statsVisitante.totalPuntosEnContra }}</p>
+        </div>
+      }
+    </div>
+  </section>
+}

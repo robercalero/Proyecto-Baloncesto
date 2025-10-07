@@ -1,0 +1,120 @@
+/* Tarjeta de Jugador */
+.tarjeta-jugador {
+  background: var(--surface-color);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  margin: var(--spacing-sm);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.tarjeta-jugador::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--primary-color);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.tarjeta-jugador:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--primary-color);
+}
+
+.tarjeta-jugador:hover::before {
+  transform: scaleY(1);
+}
+
+.dorsal {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: var(--shadow-light);
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.info h4 {
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info .equipo {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tarjeta-jugador {
+    padding: var(--spacing-sm);
+    margin: var(--spacing-xs);
+  }
+  
+  .dorsal {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+  
+  .info h4 {
+    font-size: 1rem;
+  }
+  
+  .info .equipo {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tarjeta-jugador {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .dorsal {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+  
+  .info h4,
+  .info .equipo {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}

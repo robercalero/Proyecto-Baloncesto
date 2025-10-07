@@ -1,0 +1,187 @@
+<!-- Header con navegación mejorada -->
+<mat-toolbar color="primary" class="header-principal">
+  <div class="header-contenido">
+    <div class="logo-titulo">
+      <mat-icon class="logo-icono">sports_basketball</mat-icon>
+      <span class="titulo-app">{{ title() }}</span>
+    </div>
+    
+    <span class="espaciador"></span>
+    
+    <!-- Navegación principal -->
+    <nav class="navegacion-principal">
+      <a mat-button 
+         routerLink="/dashboard" 
+         routerLinkActive="activo" 
+         class="nav-link">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-button 
+         routerLink="/equipos" 
+         routerLinkActive="activo" 
+         class="nav-link">
+        <mat-icon>groups</mat-icon>
+        <span>Equipos</span>
+      </a>
+      <a mat-button 
+         routerLink="/jugadores" 
+         routerLinkActive="activo" 
+         class="nav-link">
+        <mat-icon>person</mat-icon>
+        <span>Jugadores</span>
+      </a>
+      <a mat-button 
+         routerLink="/partidos" 
+         routerLinkActive="activo" 
+         class="nav-link">
+        <mat-icon>sports</mat-icon>
+        <span>Partidos</span>
+      </a>
+      <a mat-button 
+         routerLink="/analytics" 
+         routerLinkActive="activo" 
+         class="nav-link">
+        <mat-icon>analytics</mat-icon>
+        <span>Analytics</span>
+      </a>
+      <a mat-button
+         routerLink="/configuracion"
+         routerLinkActive="activo"
+         class="nav-link">
+        <mat-icon>settings</mat-icon>
+        <span>Configuración</span>
+      </a>
+      <a mat-button
+         routerLink="/optimizacion"
+         routerLinkActive="activo"
+         class="nav-link">
+        <mat-icon>tune</mat-icon>
+        <span>Optimización</span>
+      </a>
+    </nav>
+
+    <!-- Acciones del header -->
+    <div class="acciones-header">
+      <!-- Notificaciones -->
+      <button mat-icon-button 
+              [matMenuTriggerFor]="menuNotificaciones"
+              class="btn-notificaciones">
+        <mat-icon [matBadge]="notificacionesNoLeidas().length" 
+                  matBadgeColor="warn"
+                  matBadgeSize="small">notifications</mat-icon>
+      </button>
+      
+      <!-- Menú de usuario -->
+      <button mat-icon-button [matMenuTriggerFor]="menuUsuario">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Menú de notificaciones -->
+<mat-menu #menuNotificaciones="matMenu" class="menu-notificaciones">
+  <div class="menu-notificaciones-header">
+    <h3>Notificaciones</h3>
+    <button mat-icon-button (click)="marcarTodasComoLeidas()">
+      <mat-icon>done_all</mat-icon>
+    </button>
+  </div>
+  
+  @if (notificacionesNoLeidas().length === 0) {
+    <div class="sin-notificaciones">
+      <mat-icon>notifications_off</mat-icon>
+      <p>No hay notificaciones</p>
+    </div>
+  } @else {
+    @for (notificacion of notificacionesNoLeidas(); track notificacion.id) {
+      <button mat-menu-item (click)="marcarComoLeida(notificacion.id)">
+        <mat-icon [class]="'icono-' + notificacion.tipo">{{ obtenerIconoNotificacion(notificacion.tipo) }}</mat-icon>
+        <div class="contenido-notificacion">
+          <div class="titulo-notificacion">{{ notificacion.titulo }}</div>
+          <div class="mensaje-notificacion">{{ notificacion.mensaje }}</div>
+          <div class="fecha-notificacion">{{ formatearFecha(notificacion.fecha) }}</div>
+        </div>
+        <mat-icon class="icono-eliminar" (click)="eliminarNotificacion(notificacion.id); $event.stopPropagation()">close</mat-icon>
+      </button>
+    }
+  }
+</mat-menu>
+
+<!-- Menú de usuario -->
+<mat-menu #menuUsuario="matMenu">
+  <button mat-menu-item>
+    <mat-icon>person</mat-icon>
+    <span>Perfil</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>settings</mat-icon>
+    <span>Configuración</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item>
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar Sesión</span>
+  </button>
+</mat-menu>
+
+<!-- Contenido principal -->
+<main class="contenido-principal">
+  <div class="contenedor-pagina">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<!-- Pie de página mejorado -->
+<footer class="pie-pagina">
+  <div class="contenido-pie">
+    <div class="info-empresa">
+      <mat-icon class="logo-pie">sports_basketball</mat-icon>
+      <div class="texto-empresa">
+        <h4>Proyecto Baloncesto</h4>
+        <p>Gestión completa de estadísticas deportivas</p>
+      </div>
+    </div>
+    
+    <div class="enlaces-pie">
+      <div class="columna-enlaces">
+        <h5>Navegación</h5>
+        <a routerLink="/dashboard">Dashboard</a>
+        <a routerLink="/equipos">Equipos</a>
+        <a routerLink="/jugadores">Jugadores</a>
+        <a routerLink="/partidos">Partidos</a>
+      </div>
+      
+      <div class="columna-enlaces">
+        <h5>Recursos</h5>
+        <a href="#">Documentación</a>
+        <a href="#">API</a>
+        <a href="#">Soporte</a>
+        <a href="#">Contacto</a>
+      </div>
+      
+      <div class="columna-enlaces">
+        <h5>Legal</h5>
+        <a href="#">Términos de Uso</a>
+        <a href="#">Política de Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+    
+    <div class="redes-sociales">
+      <h5>Síguenos</h5>
+      <div class="iconos-redes">
+        <button mat-icon-button><mat-icon>facebook</mat-icon></button>
+        <button mat-icon-button><mat-icon>twitter</mat-icon></button>
+        <button mat-icon-button><mat-icon>instagram</mat-icon></button>
+        <button mat-icon-button><mat-icon>youtube</mat-icon></button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    <p>&copy; 2025 Proyecto Baloncesto. Todos los derechos reservados.</p>
+    <p>Desarrollado con Angular 20 y Material Design</p>
+  </div>
+</footer>

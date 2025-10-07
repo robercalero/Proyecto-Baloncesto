@@ -1,0 +1,270 @@
+<!-- Header de la página -->
+<div class="header-pagina">
+  <div class="titulo-seccion">
+    <mat-icon class="icono-titulo">settings</mat-icon>
+    <h1>Configuración</h1>
+  </div>
+</div>
+
+<!-- Configuración de apariencia -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>palette</mat-icon>
+      Apariencia
+    </mat-card-title>
+    <mat-card-subtitle>Personaliza la apariencia de la aplicación</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="configuracion-opciones">
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>dark_mode</mat-icon>
+          <div class="opcion-texto">
+            <h3>Tema Oscuro</h3>
+            <p>Activa el tema oscuro para una mejor experiencia nocturna</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="temaOscuro()" 
+          (change)="cambiarTemaOscuro($event.checked)">
+        </mat-slide-toggle>
+      </div>
+      
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>animation</mat-icon>
+          <div class="opcion-texto">
+            <h3>Animaciones</h3>
+            <p>Habilita las animaciones y transiciones</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="animaciones()" 
+          (change)="cambiarAnimaciones($event.checked)">
+        </mat-slide-toggle>
+      </div>
+      
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>view_compact</mat-icon>
+          <div class="opcion-texto">
+            <h3>Vista Compacta</h3>
+            <p>Reduce el espaciado para mostrar más contenido</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="compacto()" 
+          (change)="cambiarCompacto($event.checked)">
+        </mat-slide-toggle>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Configuración de notificaciones -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>notifications</mat-icon>
+      Notificaciones
+    </mat-card-title>
+    <mat-card-subtitle>Gestiona las notificaciones y alertas</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="configuracion-opciones">
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>notifications_active</mat-icon>
+          <div class="opcion-texto">
+            <h3>Notificaciones Push</h3>
+            <p>Recibe notificaciones del sistema</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="notificacionesPush()" 
+          (change)="cambiarNotificacionesPush($event.checked)">
+        </mat-slide-toggle>
+      </div>
+      
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>volume_up</mat-icon>
+          <div class="opcion-texto">
+            <h3>Sonido de Notificaciones</h3>
+            <p>Reproduce sonidos para las notificaciones</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="sonidoNotificaciones()" 
+          (change)="cambiarSonidoNotificaciones($event.checked)">
+        </mat-slide-toggle>
+      </div>
+      
+      <div class="opcion-configuracion">
+        <div class="opcion-info">
+          <mat-icon>save</mat-icon>
+          <div class="opcion-texto">
+            <h3>Auto-guardado</h3>
+            <p>Guarda automáticamente los cambios</p>
+          </div>
+        </div>
+        <mat-slide-toggle 
+          [checked]="autoGuardado()" 
+          (change)="cambiarAutoGuardado($event.checked)">
+        </mat-slide-toggle>
+      </div>
+    </div>
+    
+    <div class="acciones-notificaciones">
+      <button mat-raised-button color="primary" (click)="probarNotificaciones()">
+        <mat-icon>notifications</mat-icon>
+        Probar Notificaciones
+      </button>
+      
+      <button mat-button (click)="solicitarPermisosNotificaciones()">
+        <mat-icon>security</mat-icon>
+        Solicitar Permisos
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Configuración de idioma -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>language</mat-icon>
+      Idioma
+    </mat-card-title>
+    <mat-card-subtitle>Selecciona el idioma de la aplicación</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <mat-form-field appearance="outline" class="idioma-selector">
+      <mat-label>Idioma</mat-label>
+      <mat-select [value]="idioma()" (selectionChange)="cambiarIdioma($event.value)">
+        @for (idioma of idiomas; track idioma.codigo) {
+          <mat-option [value]="idioma.codigo">
+            <span class="idioma-opcion">
+              <span class="bandera">{{ idioma.bandera }}</span>
+              <span class="nombre">{{ idioma.nombre }}</span>
+            </span>
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+
+<!-- Estadísticas de la aplicación -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>analytics</mat-icon>
+      Estadísticas de la Aplicación
+    </mat-card-title>
+    <mat-card-subtitle>Información sobre el uso de la aplicación</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="estadisticas-app">
+      <div class="estadistica-item">
+        <mat-icon>person</mat-icon>
+        <div class="estadistica-info">
+          <div class="estadistica-valor">{{ totalJugadores() }}</div>
+          <div class="estadistica-label">Jugadores</div>
+        </div>
+      </div>
+      
+      <div class="estadistica-item">
+        <mat-icon>groups</mat-icon>
+        <div class="estadistica-info">
+          <div class="estadistica-valor">{{ totalEquipos() }}</div>
+          <div class="estadistica-label">Equipos</div>
+        </div>
+      </div>
+      
+      <div class="estadistica-item">
+        <mat-icon>sports</mat-icon>
+        <div class="estadistica-info">
+          <div class="estadistica-valor">{{ totalPartidos() }}</div>
+          <div class="estadistica-label">Partidos</div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Gestión de datos -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>storage</mat-icon>
+      Gestión de Datos
+    </mat-card-title>
+    <mat-card-subtitle>Exporta, importa o limpia los datos de la aplicación</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="gestion-datos">
+      <div class="accion-datos">
+        <button mat-raised-button color="primary" (click)="exportarDatos()">
+          <mat-icon>download</mat-icon>
+          Exportar Datos
+        </button>
+        <p>Descarga una copia de seguridad de todos los datos</p>
+      </div>
+      
+      <div class="accion-datos">
+        <button mat-raised-button color="accent" (click)="importarInput.click()">
+          <mat-icon>upload</mat-icon>
+          Importar Datos
+        </button>
+        <input #importarInput 
+               type="file" 
+               accept=".json" 
+               (change)="importarDatos($event)"
+               style="display: none;">
+        <p>Importa datos desde un archivo de respaldo</p>
+      </div>
+      
+      <div class="accion-datos">
+        <button mat-raised-button color="warn" (click)="limpiarDatos()">
+          <mat-icon>delete_forever</mat-icon>
+          Limpiar Datos
+        </button>
+        <p>Elimina todos los datos de la aplicación</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<!-- Configuración avanzada -->
+<mat-card class="configuracion-seccion">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-icon>tune</mat-icon>
+      Configuración Avanzada
+    </mat-card-title>
+    <mat-card-subtitle>Opciones avanzadas para usuarios experimentados</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <div class="configuracion-avanzada">
+      <div class="opcion-avanzada">
+        <mat-icon>refresh</mat-icon>
+        <div class="opcion-texto">
+          <h3>Resetear Configuración</h3>
+          <p>Restaura todas las configuraciones a sus valores por defecto</p>
+        </div>
+        <button mat-button color="warn" (click)="resetearConfiguracion()">
+          <mat-icon>restore</mat-icon>
+          Resetear
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
