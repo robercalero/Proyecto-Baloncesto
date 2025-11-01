@@ -4,6 +4,7 @@ import { Jugadores } from '../../interfaces/jugadores';
 
 @Component({
   selector: 'app-tarjetas-jugador-componente',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   templateUrl: './tarjetas-jugador-componente.html',

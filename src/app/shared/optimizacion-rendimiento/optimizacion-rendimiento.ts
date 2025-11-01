@@ -18,6 +18,7 @@ interface MetricRendimiento {
 
 @Component({
   selector: 'app-optimizacion-rendimiento',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatProgressBarModule, MatChipsModule],
   templateUrl: './optimizacion-rendimiento.html',

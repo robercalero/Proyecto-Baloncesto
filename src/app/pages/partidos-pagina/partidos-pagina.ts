@@ -8,6 +8,7 @@ import { Equipos } from '../../interfaces/equipos';
 
 @Component({
   selector: 'app-partidos-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule],
   templateUrl: './partidos-pagina.html',

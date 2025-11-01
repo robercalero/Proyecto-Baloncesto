@@ -6,6 +6,7 @@ import { TarjetasJugadorComponente } from '../../shared/tarjetas-jugador-compone
 
 @Component({
   selector: 'app-equipos-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule, TarjetasJugadorComponente],
   templateUrl: './equipos-pagina.html',

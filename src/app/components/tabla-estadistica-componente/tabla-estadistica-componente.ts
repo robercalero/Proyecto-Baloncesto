@@ -11,6 +11,7 @@ interface EstadisticasEquipo {
 
 @Component({
   selector: 'app-tabla-estadistica-componente',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
   templateUrl: './tabla-estadistica-componente.html',

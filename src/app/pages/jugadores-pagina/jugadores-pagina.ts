@@ -13,6 +13,7 @@ type VistaJugadores = 'grid' | 'lista' | 'tabla';
 
 @Component({
   selector: 'app-jugadores-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule, 

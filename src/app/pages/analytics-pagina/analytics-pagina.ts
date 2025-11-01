@@ -6,6 +6,7 @@ import { EstadisticaTienda } from '../../services/estadistica-tienda';
 
 @Component({
   selector: 'app-analytics-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MaterialModule],
   templateUrl: './analytics-pagina.html',

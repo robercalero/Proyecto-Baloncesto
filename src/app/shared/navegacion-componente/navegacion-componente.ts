@@ -20,6 +20,7 @@ interface MenuItem {
 
 @Component({
   selector: 'app-navegacion-componente',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatBadgeModule, MatMenuModule, MatDividerModule],
   templateUrl: './navegacion-componente.html',

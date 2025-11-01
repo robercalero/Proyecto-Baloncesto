@@ -18,6 +18,12 @@ interface Optimizacion {
   categoria: 'rendimiento' | 'memoria' | 'red' | 'ui';
 }
 
+type ConfiguracionOptimizacion = {
+  monitoreoActivo: boolean;
+  intervaloActualizacion: number;
+  umbralRendimiento: number;
+};
+
 @Injectable({ providedIn: 'root' })
 export class OptimizacionServicio {
   private readonly analytics = inject(AnalyticsServicio);
@@ -25,7 +31,7 @@ export class OptimizacionServicio {
   // Signals para métricas de rendimiento
   private readonly _metricas = signal<MetricRendimiento[]>([]);
   private readonly _optimizaciones = signal<Optimizacion[]>([]);
-  private readonly _configuracion = signal({
+  private readonly _configuracion = signal<ConfiguracionOptimizacion>({
     monitoreoActivo: true,
     intervaloActualizacion: 5000,
     umbralRendimiento: 80
@@ -246,7 +252,7 @@ export class OptimizacionServicio {
     this.analytics.registrarEvento('optimizacion', 'desaplicar', { id });
   }
 
-  actualizarConfiguracion(config: Partial<typeof this._configuracion>): void {
+  actualizarConfiguracion(config: Partial<ConfiguracionOptimizacion>): void {
     this._configuracion.update(current => ({ ...current, ...config }));
     this.analytics.registrarEvento('optimizacion', 'actualizar_configuracion', config);
   }

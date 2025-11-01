@@ -1,0 +1,8 @@
+{
+  "watch": ["server.js", "routes/", "models/", "middlewares/", "config/", "seeders/"],
+  "ext": "js",
+  "ignore": ["node_modules/", "database.sqlite"],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

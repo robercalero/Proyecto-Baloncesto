@@ -8,6 +8,7 @@ import { EstadisticaTienda } from '../../services/estadistica-tienda';
 
 @Component({
   selector: 'app-configuracion-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, FormsModule, MaterialModule],
   templateUrl: './configuracion-pagina.html',

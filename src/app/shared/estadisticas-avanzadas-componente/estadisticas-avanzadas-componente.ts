@@ -7,6 +7,7 @@ import { AnalyticsServicio } from '../../services/analytics-servicio';
 
 @Component({
   selector: 'app-estadisticas-avanzadas-componente',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './estadisticas-avanzadas-componente.html',

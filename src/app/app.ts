@@ -8,6 +8,7 @@ import { TipoNotificacion } from './interfaces/notificaciones';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterOutlet, 

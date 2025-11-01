@@ -5,6 +5,7 @@ import { EstadisticaTienda } from '../../services/estadistica-tienda';
 
 @Component({
   selector: 'app-graficos-prueba',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [BaseChartDirective],
   templateUrl: './graficos-prueba.html',

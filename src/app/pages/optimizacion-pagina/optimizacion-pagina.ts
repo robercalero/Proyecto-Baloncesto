@@ -15,6 +15,7 @@ import { OptimizacionRendimiento } from '../../shared/optimizacion-rendimiento/o
 
 @Component({
   selector: 'app-optimizacion-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,

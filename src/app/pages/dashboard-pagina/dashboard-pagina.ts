@@ -29,6 +29,7 @@ interface QuickAction {
 
 @Component({
   selector: 'dashboard-pagina',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule, MatTabsModule, EstadisticasAvanzadasComponente, LoadingComponente],
   templateUrl: './dashboard-pagina.html',
